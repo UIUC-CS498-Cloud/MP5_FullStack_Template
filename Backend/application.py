@@ -48,8 +48,7 @@ def get_data():
 def get_db_connection():
     """
     Establish and return a connection to the RDS MySQL database.
-    
-    Expected variables:
+    The following variables should be added to the Elastic Beanstalk Environment Properties for better security. Follow guidelines for more info.
       - DB_HOST
       - DB_USER
       - DB_PASSWORD
