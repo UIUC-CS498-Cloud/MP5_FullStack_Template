@@ -94,7 +94,7 @@ def insert_data_into_db(payload):
     create_db_table()
     # TODO: Implement the database call    
     
-    #raise NotImplementedError("Database insert function not implemented.")
+    raise NotImplementedError("Database insert function not implemented.")
 
 #Database Function Stub
 def fetch_data_from_db():
