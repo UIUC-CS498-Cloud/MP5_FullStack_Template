@@ -76,6 +76,7 @@ def create_db_table():
                 title VARCHAR(255) NOT NULL,
                 description TEXT,
                 date DATE NOT NULL,
+                iamge_url VARCHAR(255) NOT NULL,
                 location VARCHAR(255)
             )
             """
