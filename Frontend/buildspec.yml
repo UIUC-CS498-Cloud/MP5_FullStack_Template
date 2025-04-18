@@ -1,9 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    REACT_APP_API_BASE_URL: "https://{beanstalk-backend}.elasticbeanstalk.com"
-
 phases:
   install:
     runtime-versions:
