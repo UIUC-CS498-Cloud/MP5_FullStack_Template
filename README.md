@@ -17,29 +17,39 @@ You will connect and deploy this full stack app using AWS's Platform as a Servic
 
 ## Quick Start
 
-> **Note:** The frontend code needs to be uploaded to your private GitHub repo, and your finished backend code needs to be uploaded to Elastic Beanstalk. Follow the course guidelines for clear instructions.
+> **Note:** You need two private Github repos, one for your Frontend and one for your Backend. Follow the course guidelines for clear instructions.
 
 ### Frontend Setup
 
 ```bash
-git clone https://github.com/UIUC-CS498-Cloud/MP5_FullStack_Template.git
+git clone https://github.com/UIUC-CS498-Cloud/MP5_FullStack_Template
 cd MP5_FullStack_Template/Frontend
-git remote set-url origin {your-private-github-repo}
+git init
+git remote add origin {your-github-frontend-repo-url}
+git add .
+git commit -m "Frontend only"
+git branch -M main
 git push -u origin main
 ```
 
-This repo will be connected to AWS CodePipeline for automated deployment.
 
 ### Backend Setup
 ```bash
+git clone https://github.com/UIUC-CS498-Cloud/MP5_FullStack_Template
 cd MP5_FullStack_Template/Backend
+git init
+git remote add origin {your-github-backend-repo-url}
+git add .
+git commit -m "Backend only"
+git branch -M main
+git push -u origin main
 ```
 Before deploying, complete the two placeholder functions in `application.py`:
 
 - `insert_data_into_db(payload)`
 - `fetch_data_from_db()`
 
-Zip the `application.py` and `requirements.txt` files to upload to Elastic Beanstalk.
+This repos will be connected to AWS CodePipeline for automated deployment.
 
 > **Note:** Do not hardcode database credentials, always use environment variables.
 
