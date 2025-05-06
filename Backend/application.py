@@ -3,8 +3,10 @@ import os
 import pymysql
 from pymysql.err import OperationalError
 import logging
+from flask_cors import CORS
 
 application = Flask(__name__)
+CORS(application)
 logging.basicConfig(level=logging.INFO)
 
 #Endpoint: Health Check
@@ -36,7 +38,7 @@ def create_event():
     except Exception as e:
         logging.exception("Error occurred during event creation")
         return jsonify({
-            "error": "Internal server error during event creation",
+            "error": "During event creation",
             "detail": str(e)
         }), 500
 
@@ -56,7 +58,7 @@ def get_data():
     except Exception as e:
         logging.exception("Error occurred during data retrieval")
         return jsonify({
-            "error": "Internal server error during data retrieval",
+            "error": "During data retrieval",
             "detail": str(e)
         }), 500
 
@@ -96,7 +98,7 @@ def create_db_table():
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     title VARCHAR(255) NOT NULL,
                     description TEXT,
-                    iamge_url VARCHAR(255),
+                    image_url VARCHAR(255),
                     date DATE NOT NULL,
                     location VARCHAR(255)
                 )
