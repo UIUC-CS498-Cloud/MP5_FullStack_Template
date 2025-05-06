@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, request
 import os
 import pymysql
+from pymysql.err import OperationalError
+import logging
 
 application = Flask(__name__)
+logging.basicConfig(level=logging.INFO)
 
 #Endpoint: Health Check
 @application.route('/health', methods=['GET'])
@@ -28,8 +31,14 @@ def create_event():
 
         insert_data_into_db(payload)
         return jsonify({"message": "Event created successfully"}), 201
+    except NotImplementedError as nie:
+        return jsonify({"error": str(nie)}), 501
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        logging.exception("Error occurred during event creation")
+        return jsonify({
+            "error": "Internal server error during event creation",
+            "detail": str(e)
+        }), 500
 
 #Endpoint: Data Retrieval
 @application.route('/data', methods=['GET'])
@@ -42,8 +51,14 @@ def get_data():
     try:
         data = fetch_data_from_db()
         return jsonify({"data": data}), 200
-    except NotImplementedError:
-        return jsonify({"error": "Database functionality not implemented."}), 501
+    except NotImplementedError as nie:
+        return jsonify({"error": str(nie)}), 501
+    except Exception as e:
+        logging.exception("Error occurred during data retrieval")
+        return jsonify({
+            "error": "Internal server error during data retrieval",
+            "detail": str(e)
+        }), 500
 
 def get_db_connection():
     """
@@ -54,36 +69,44 @@ def get_db_connection():
       - DB_PASSWORD
       - DB_NAME
     """
-    DB_HOST = os.environ.get("DB_HOST")
-    DB_USER = os.environ.get("DB_USER")
-    DB_PASSWORD = os.environ.get("DB_PASSWORD")
-    DB_NAME = os.environ.get("DB_NAME")
-    connection = pymysql.connect(
-        host=DB_HOST,
-        user=DB_USER,
-        password=DB_PASSWORD,
-        db=DB_NAME
-    )
-    return connection
+    required_vars = ["DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME"]
+    missing = [var for var in required_vars if not os.environ.get(var)]
+    if missing:
+        msg = f"Missing environment variables: {', '.join(missing)}"
+        logging.error(msg)
+        raise EnvironmentError(msg)
+    try:
+        connection = pymysql.connect(
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            db=os.environ.get("DB_NAME")
+        )
+        return connection
+    except OperationalError as e:
+        raise ConnectionError(f"Failed to connect to the database: {e}")
 
 def create_db_table():
     connection = get_db_connection()
     try:
-        with connection.cursor() as cursor:
-            create_table_sql = """
-            CREATE TABLE IF NOT EXISTS events (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                title VARCHAR(255) NOT NULL,
-                description TEXT,
-                date DATE NOT NULL,
-                location VARCHAR(255)
-            )
-            """
-            cursor.execute(create_table_sql)
-        connection.commit()
-        print('Events table created or already exists')
-    finally:
-        connection.close()
+        with get_db_connection() as connection:
+            with connection.cursor() as cursor:
+                create_table_sql = """
+                CREATE TABLE IF NOT EXISTS events (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    title VARCHAR(255) NOT NULL,
+                    description TEXT,
+                    iamge_url VARCHAR(255),
+                    date DATE NOT NULL,
+                    location VARCHAR(255)
+                )
+                """
+                cursor.execute(create_table_sql)
+            connection.commit()
+            logging.info("Events table created or already exists")
+    except Exception as e:
+        logging.exception("Failed to create or verify the events table")
+        raise RuntimeError(f"Table creation failed: {str(e)}")
 
 def insert_data_into_db(payload):
     """
