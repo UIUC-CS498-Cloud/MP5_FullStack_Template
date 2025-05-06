@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
 import os
 import pymysql
+from flask_cors import CORS 
 
 application = Flask(__name__)
+CORS(application)
 
 #Endpoint: Health Check
 @application.route('/health', methods=['GET'])

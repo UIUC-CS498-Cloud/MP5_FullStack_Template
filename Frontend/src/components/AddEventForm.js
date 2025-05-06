@@ -6,8 +6,8 @@ export default function AddEventForm({ onAddEvent }) {
     title: '',
     description: '',
     location: '',
-    dateTime: '',
-    imageUrl: '',
+    date: '',
+    image_url: '',
   });
 
   const handleChange = (e) => {
@@ -18,7 +18,7 @@ export default function AddEventForm({ onAddEvent }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!formData.title || !formData.description || !formData.location || !formData.dateTime) {
+    if (!formData.title || !formData.description || !formData.location || !formData.date) {
       alert('Please fill out all fields!');
       return;
     }
@@ -34,8 +34,8 @@ export default function AddEventForm({ onAddEvent }) {
       name: '',
       description: '',
       location: '',
-      dateTime: '',
-      imageUrl: '',
+      date: '',
+      image_url: '',
     });
   };
 
@@ -64,17 +64,17 @@ export default function AddEventForm({ onAddEvent }) {
         onChange={handleChange}
       />
       <input
-        type="text"
-        name="dateTime"
-        placeholder="Date & Time (e.g. Sat, April 20 · 9 AM – 2 PM)"
-        value={formData.dateTime}
+        type="date"
+        name="date"
+        placeholder="Date ('YYYY-MM-DD')"
+        value={formData.date}
         onChange={handleChange}
       />
       <input
         type="text"
-        name="imageUrl"
+        name="image_url"
         placeholder="Image URL"
-        value={formData.imageUrl}
+        value={formData.image_url}
         onChange={handleChange}
       />
       <button type="submit">Add Event</button>
