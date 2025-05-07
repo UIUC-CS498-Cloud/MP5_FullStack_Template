@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    #This is used to connect frontend to backend which is beyond the scope for this MP during beta testing
+    #Update this with your Beanstalk URL when you are ready to connect your Frontend + Backend in step 3.8. Dont include the "/" at the end of the URL
     REACT_APP_API_BASE_URL: "https://{beanstalk-backend}.elasticbeanstalk.com"
 
 phases:
@@ -11,7 +11,7 @@ phases:
       nodejs: 18
     commands:
       - echo Installing dependencies...
-      - npm install
+      - npm ci
 
   build:
     commands:

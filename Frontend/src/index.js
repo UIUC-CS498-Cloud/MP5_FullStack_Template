@@ -1,8 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './index.css';
 import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const container = document.getElementById('root');
-const root = ReactDOM.createRoot(container);
+const queryClient = new QueryClient();
 
-root.render(<App />);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render( // changed 
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  </React.StrictMode>
+);
+
+reportWebVitals();
+
