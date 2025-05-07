@@ -1,6 +1,6 @@
 # CS 498 - Full Stack Event Board Templates (Frontend / Backend)
 
-This repository contains starter code templates to help you complete MP5: Full Stack Event Board using AWS services like S3, CloudFront, CodePipeline, CodeBuild, Elastic Beanstalk, and RDS.
+This repository contains starter code templates to help you complete MP5: Full Stack Event Board using AWS services like S3, CodePipeline, CodeBuild, Elastic Beanstalk, and RDS.
 
 ---
 
