@@ -55,4 +55,4 @@ This repos will be connected to AWS CodePipeline for automated deployment.
 
 ## Log
 
-Last updated in May 2025 by Priyansh Tratiya (tratiya2@illinois.edu)
+Last updated in May 2025 by Priyansh Tratiya (tratiya2@illinois.edu), Divya Machineni (divyam4@illinois.edu)
