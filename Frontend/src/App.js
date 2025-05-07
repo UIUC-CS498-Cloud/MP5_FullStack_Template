@@ -6,7 +6,13 @@ import AddEventForm from './components/AddEventForm';
 import './App.css';
 import { useQuery, useQueryClient, useMutation} from '@tanstack/react-query';
 
-// TODO: create ENV variable for API URL from buildspec.yml variable "REACT_APP_API_BASE_URL"
+// Note you will have to update this env variable in your Frontend/buildspec.yml with your created beanstalk URL.
+const API_BASE = process.env.REACT_APP_API_BASE_URL;
+
+// use this endpoints URLs for your fetching and adding logic that you will implement.
+const FETCH_EVENTS_URL = `${API_BASE}/data`;
+const ADD_EVENT_URL = `${API_BASE}/events`;
+
 
 // TODO: Implement this function to fetch event data from your backend. Return the parsed JSON (an array of event objects)
 // HINT: Use the `fetch()` API and handle errors appropriately.
